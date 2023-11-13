@@ -1,0 +1,35 @@
+body {
+    background-color: white;
+}
+div {
+    border-radius: 6px;
+}
+h1, h2 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 40;
+    color: black;
+}
+
+h3, h4, p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+}
+h3 {
+    font-size: 24px;
+    font-weight: 4000;
+}
+h4 {
+    font-size: 16px;
+    font-style: oblique;
+}
+
+main_info_box {
+    text-align: center;
+    border: 3px solid black;
+}

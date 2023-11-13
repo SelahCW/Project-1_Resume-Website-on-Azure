@@ -1,5 +1,9 @@
 locals {
-    static_site_name = "ResumeStaticSite"
-    homepage = "home"
-    zone_name = "resumesite.com"
+    name = "SelahRG"
+    location = "eastus2"
+    common_tags = {
+        created_by = "Selah Williams"
+        environment = "Development"
+        website = "home.resumesite.com"
+    }
 }
