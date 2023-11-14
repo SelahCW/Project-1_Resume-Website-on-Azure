@@ -5,63 +5,141 @@
 <title>Selah's Resume</title> 
 </head>
 <body>
-<!-- MAIN INFO BOX-->
-    <div id="main_info_box">
+<div class="grid-container">
+    <div class="header">
+        <p class="header_text">Selah's Resume</p>
+    </div>
+    <!-- MAIN INFO BOX-->
+    <div class="main_info_box">
         <!-- MAIN HEADER -->
         <div id="header">
+            <picture>
+                <img src="1000016650.jpg" style="width:200px;">
+            </picture>
             <!--NAME-->
-            <div id="main_header_name">
-                <h1 class="first_name">Selah <span class="last_name">Williams</span></h1>
-            </div>
-            <div id="main_header_email">
-                <h2 class="email"><a href="mailto:selah.camille.williams@drexel.edu">selah.camille.williams@drexel.edu</a></h2>
-            </div>
+            <h1>Selah <span class="last_name">Williams</span></h1>
+            <h2 class="email"><a href="mailto:selah.camille.williams@drexel.edu">selah.camille.williams@drexel.edu</a></h2>
         </div>
     </div>
-<!-- EDUCATION BOX -->
-    <div id="education_box">
+    <!-- EDUCATION BOX -->
+    <div class="education_box">
         <h3>Education</h3>
-        <div class="indented_body">
-            <div class="left">
-                <h4>Bachelor of Science in Computer Engineering</h4>
-                <p>Cumulative GPA: 2.93</p>
+        <div class="row">
+            <div class="column">
+                    <p><b>Drexel University</b></p>
+                    <p><em>Bachelor of Science in Computer Engineering</em></p>
+                    <p>Cumulative GPA: 2.93</p>
             </div>
-            <div class="right">
+            <div class="column">
+                    <p>Philadelphia, PA</p>
+                    <p>Anticipated Graduation: August 2025</p>
+            </div>
+        </div>
+    </div>
+    <!-- HONORS AND AWARDS BOX -->
+    <div class="honors_and_awards_box">
+        <h3>Honors and Awards</h3>
+        <div class="single_column">
+            <p>National History Day Award: 2nd Place (Regionals), Meade High School, 2016</p>
+            <p>Science Fair Award: 2nd Place in Physics (Regionals), Meade High School, 2018</p>
+            <p>Anne Arundel County Art Gallery Student Entry, 2017</p>
+            <p>Graduated Magna Cum Laude (3rd best of 440 students), Meade High School, 2020</p>
+        </div>
+    </div>
+    <!-- RELEVANT COURSEWORK BOX -->
+    <div class="relevant_coursework_box">
+        <h3>Relevant Coursework</h3>
+        <div class="row">
+            <div class="column">
+                    <p>Intro to Engin. Design & Data Analysis</p>
+                    <p>Electric Circuits</p>
+                    <p>Dynamic Engineering Systems</p>
+                    <p>Adv Programming for Engineers I</p>
+                    <p>1st Year Engin. Design</p>
+                    <p>Data Structures</p>
+                    <p>Complex and Vect. Analysis for Engin.</p>
+            </div>
+            <div class="column">
+                    <p>Digital Logic Design</p>
+                    <p>Linear Engin Systems</p>
+                    <p>Programming for Engineers I,II</p>
+                    <p>Adv. Programming Techniques</p>
+                    <p>Design with Microcontrollers</p>
+                    <p>Mathematical Found. in Comp Sci</p>
+                    <p>Intro to Comp. Org.</p>
+            </div>
+        </div>
+    </div>
+    <!-- SKILLS BOX -->
+    <div class="skills_box">
+        <h3>Skills</h3>
+        <div class="single_column">
+            <p>Software: AutoCAD, Microsoft Word, Excel, PowerPoint, OrCAD, MATLAB</p>
+            <p>Programming Languages: Python, HTML, CSS, C, C++, Javascript, Git, VHDL</p>
+            <p>Technical Skills: Soldering</p>
+        </div>
+    </div>
+    <!-- ENGINEERING PROJECT EXPERIENCE BOX -->
+    <div class="engineering_project_experience_box">
+        <h3>Engineering Project Experience</h3>
+        <div class="row">
+            <div class="column">
+                <p><b>Hackathon Submission - DragonHacks 2022</b></p>
+                <p><em>Front-End Programmer</em></p>
+                    <ul>
+                        <li>A website made within 24 hours that showcases the 4 elements</li>
+                        <li>Learned how to use HTML, CSS, & GitHub for the project</li>
+                        <li>Worked with team to design and build a simple one-page website</li>
+                    </ul>
+            </div>
+            <div class="column">
                 <p>Philadelphia, PA</p>
-                <p>Graduation: August 2025</p>
+                <p>April to May 2022</p>
             </div>
         </div>
     </div>
-    <div id="honors_and_awards_box">
-        <div class="left">
-            <h3>Honors and Awards</h3>
-            <div class="indented_body">
-                <p>National History Day Award: 2nd Place (Regionals), Meade High School, 2016</p>
-                <p>Science Fair Award: 2nd Place in Physics (Regionals), Meade High School, 2018</p>
-                <p>Anne Arundel County Art Gallery Student Entry, 2017</p>
-                <p>Graduated Magna Cum Laude (3rd best of 440 students), Meade High School, 2020</p>
+    <!-- CO-OP EXPERIENCE BOX -->
+    <div class="co-op_experience_box">
+        <h3>Co-op Experience</h3>
+        <div class="row">
+            <div class="column">
+                <p><b>G3 Technologies</b></p>
+                <p><em>Electrical Engineering Co-Op</em></p>
+                <ul>
+                    <li>Generated schematics for PCB board designs</li>
+                    <li>Tested and performed issue resolution on printed board assemblies for use in various radio systems</li>
+                    <li>Worked alongside team to design functional printed board assemblies to aid in hardware testing</li>
+                </ul>
+                <p><b>SRI International</b></p>
+                <p><em>Software Engineering Intern</em></p>
+                <ul>
+                    <li>Produced software documentation for radar systems</li>
+                    <li>Ported established computer network based-socket programming solution from Windows to Linux</li>
+                    <li>Designed and implemented audio communication solution for ARM-based microcontrollers in bare-metal C language</li>
+                </ul>
+            </div>
+            <div class="column">
+                <p>Mount Airy, MD</p>
+                <p>September to March 2022</p>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <p>Princeton, NJ</p>
+                <p>September to March 2023</p>
             </div>
         </div>
     </div>
-    <div id="Relevant Coursework">
-        <div class="left">
-            <h3>Relevant Coursework</h3>
-            <div class="indented_body">
-                <p>Intro to Engin. Design & Data Analysis</p>
-                <p>Electric Circuits</p>
-                <p>Dynamic Engineering Systems</p>
-                <p>Adv Programming for Engineers I</p>
-                <p>1st Year Engin. Design</p>
-                <p></p>
-            </div>
-        </div>
-        <div class="right">
-            <div class="indented_body">
-                <p>Digital Logic Design</p>
-                <p>Linear Engin Systems</p>
-                <p></p>
-            </div>
+    <!-- ACTIVITIES BOX -->
+    <div class="activities_box">
+        <h3>Activities</h3>
+        <div class="single_column">
+            <p>Member, Drexel DGA, Drexel University, 2021 - Present</p>
         </div>
     </div>
+    <div class="footer">
+        <p class="footer_text">This website was made by Selah C. Williams</p>
+    </div>
+</div>
 </body>
 </html>
