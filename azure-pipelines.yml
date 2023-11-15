@@ -17,6 +17,5 @@ steps:
     api_location: 'api'
     output_location: 'build'
     skip_api_build: true
-  env:
-    azure_static_web_apps_api_token: $(deployment_token)
+    azure_static_web_apps_api_token: ${env:DEPLOYMENT_TOKEN}
 
