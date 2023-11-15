@@ -13,7 +13,7 @@ steps:
   submodules: true
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: '/src/website'
+    app_location: 'website'
     api_location: 'api'
     output_location: 'build'
     skip_api_build: true
