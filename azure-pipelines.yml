@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool: websitevmssagents
+
+steps:
+- checkout: self
+  submodules: true
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: '/src/website'
+    api_location: ''
+    output_location: '/public'
+    skip_api_build: true
+    cwd: '$(System.DefaultWorkingDirectory)/myapp'
+    azure_static_web_apps_api_token: $(deployment_token)
+
