@@ -6,18 +6,11 @@
 trigger:
 - azure-pipelines
 
-pool: websitevmssagents
+pool: 
+  vmImage: ubuntu-latest
 
 steps:
 - checkout: self
-  submodules: true
-- script: |
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    sudo groupadd docker
-    sudo usermod -aG docker $USER
-    newgrp docker
-  displayName: 'Install Docker'
 - task: AzureStaticWebApp@0
   inputs:
     app_location: 'src/website'
