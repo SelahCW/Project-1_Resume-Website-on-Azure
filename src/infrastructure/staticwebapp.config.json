@@ -8,7 +8,7 @@
     {  
         "route": "/src/website/index.html",
         "allowedRoles": []
-    }
+    },
     {
         "route": "/src/website/images/*",
         "headers": {
