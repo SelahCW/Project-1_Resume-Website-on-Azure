@@ -13,10 +13,10 @@ steps:
   submodules: true
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: ''
-    skip_api_build: true
+    app_location: 'src/website'
     api_location: ''
-    skip_app_build: true
-    output_location: 'website'
+    #skip_app_build: true
+    skip_api_build: true
+    output_location: 'src/infrastructure'
     azure_static_web_apps_api_token: $(deployment_token)
 

@@ -8,7 +8,7 @@ variable "RG_name" {
 variable "RG_location" {
     description = "Location of the resource group"
     type = string
-    default = "EastUS2"
+    default = "EastUS"
 }
 
 
