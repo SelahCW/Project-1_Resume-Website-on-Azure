@@ -1,17 +1,38 @@
 
 # Introduction 
-A static website that displays my resume.
+A static website deployed on the cloud using Terraform and a Microsoft Azure storage account that displays my resume.
 
 # Getting Started
-Need to have Terraform installed on your computer and an Azure Subscription and a way to run the code
+* Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install)
+
+<p>An Azure subscription is required to run this code.<br>
+To run the project on your IDE of choice, you must log into your Azure account:</p>
+
+`az login`
 
 # Build and Test
-Edit HTML files locally and view in local browser
 
-Follow terraform testing process
+## Modifying Website
+The files required for the website have been configured to automatically deploy to the storage account's `$web` storage container. Any required changes to the website's HTML & CSS files should be made prior to resource deployment.
+
+## Deploying Storage Account
+Create a remote state with:
+
+> `terraform init`
+
+Run the terraform validate command to validate the configuration files in your directory:
+
+> `terraform validate`
+
+Run terraform plan to verify the deployment, then terraform apply to deploy them:
+
+> `terraform plan`<br>
+> `terraform apply`
+
+After executing the apply command, you will be prompted to confirm or decline the process, enter `yes`.
 
 # Contribute
-Contact selah.williams@softchoice.com to contribute
+Contact [Selah Williams](mailto:selah.williams@softchoice.com) to contribute
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
