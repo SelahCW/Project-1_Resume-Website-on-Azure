@@ -1,0 +1,95 @@
+formatter: markdown table # this is required
+
+version: 0.16.0
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: true
+  path: ./src/infrastructure
+
+sections:
+  hide: []
+  show:
+    - header
+    - requirements
+    - providers
+    - modules
+    - resources
+    - inputs
+    - outputs
+
+content: |-
+  # Introduction
+  A static website deployed on the cloud using Terraform and Azure Static Web App that displays my resume.
+
+  # Getting Started
+
+  * Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install)
+
+  <p>An Azure subscription is required to run this code.<br>
+  To run the project on your IDE of choice, you must log into your Azure account:</p>
+
+  `az login`
+
+  # Build and Test
+
+  ## Modifying Website
+  The files required for the website have been configured to automatically deploy to the Static Web App resource. Any required changes to the website's HTML & CSS files should be made prior to resource deployment.
+
+  ## Deploying Storage Account
+  Create a remote state with:
+
+  > `terraform init`
+
+  Run the terraform validate command to validate the configuration files in your directory:
+
+  > `terraform validate`
+
+  Run terraform plan to verify the deployment, then terraform apply to deploy them:
+
+  > `terraform plan`<br>
+  > `terraform apply`
+
+  After executing the apply command, you will be prompted to confirm or decline the process, enter `yes`.
+
+  # Contribute
+  Contact [Selah Williams](mailto:selah.williams@softchoice.com) to contribute
+  {{ .Requirements }}
+  {{ .Providers }}
+  {{ .Modules }}
+  {{ .Resources }}
+  {{ .Inputs }}
+  {{ .Outputs }}
+
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: required
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true
