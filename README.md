@@ -1,20 +1,79 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Introduction
+A static website deployed on the cloud using Terraform and Azure Static Web App that displays my resume.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+* Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install)
+
+<p>An Azure subscription is required to run this code.<br>
+To run the project on your IDE of choice, you must log into your Azure account:</p>
+
+`az login`
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+
+## Modifying Website
+The files required for the website have been configured to automatically deploy to the Static Web App resource. Any required changes to the website's HTML & CSS files should be made prior to resource deployment.
+
+## Deploying Storage Account
+Create a remote state with:
+
+> `terraform init`
+
+Run the terraform validate command to validate the configuration files in your directory:
+
+> `terraform validate`
+
+Run terraform plan to verify the deployment, then terraform apply to deploy them:
+
+> `terraform plan`<br>
+> `terraform apply`
+
+After executing the apply command, you will be prompted to confirm or decline the process, enter `yes`.
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Contact [Selah Williams](mailto:selah.williams@softchoice.com) to contribute
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+<!-- BEGIN_TF_DOCS -->
+# Introduction
+A static website deployed on the cloud using Terraform and Azure Static Web App that displays my resume.
+
+# Getting Started
+
+* Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install)
+
+<p>An Azure subscription is required to run this code.<br>
+To run the project on your IDE of choice, you must log into your Azure account:</p>
+
+`az login`
+
+# Build and Test
+
+## Modifying Website
+The files required for the website have been configured to automatically deploy to the Static Web App resource. Any required changes to the website's HTML & CSS files should be made prior to resource deployment.
+
+## Deploying Storage Account
+Create a remote state with:
+
+> `terraform init`
+
+Run the terraform validate command to validate the configuration files in your directory:
+
+> `terraform validate`
+
+Run terraform plan to verify the deployment, then terraform apply to deploy them:
+
+> `terraform plan`<br>
+> `terraform apply`
+
+After executing the apply command, you will be prompted to confirm or decline the process, enter `yes`.
+
+# Contribute
+Contact [Selah Williams](mailto:selah.williams@softchoice.com) to contribute
+
+
+
+
+
+
+
+<!-- END_TF_DOCS -->
