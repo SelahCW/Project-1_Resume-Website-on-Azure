@@ -1,0 +1,4 @@
+    resource_group_name  = "tfstate"
+    storage_account_name = "tfstateuxa3j"
+    container_name       = "tfstate"
+    key                  = "prod.website.tfstate"
