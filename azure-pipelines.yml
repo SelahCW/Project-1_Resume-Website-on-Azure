@@ -35,7 +35,7 @@ steps:
     #scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
     # string. Required when scriptLocation = inlineScript. Inline Script.
     inlineScript: |
-      terraform init
+      terraform init -backend-config="prod.website.tfbackend"
       terraform plan
     #arguments: # string. Alias: scriptArguments. Script Arguments. 
     #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
