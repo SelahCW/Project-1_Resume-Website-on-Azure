@@ -51,5 +51,5 @@ steps:
   displayName: Approve Terraform Apply
   inputs:
     #notifyUsers: # string. Required. Notify users. 
-    #instructions: # string. Instructions. 
+    instructions: Check plan and approve if good # string. Instructions. 
     #onTimeout: 'reject' # 'reject' | 'resume'. On timeout. Default: reject.
