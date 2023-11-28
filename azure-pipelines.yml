@@ -45,11 +45,23 @@ steps:
     workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
     #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
     #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
-# Manual validation v0
-# [PREVIEW] Pause a pipeline run to wait for manual interaction. Works only with YAML pipelines.
-- task: ManualValidation@0
-  displayName: Approve Terraform Apply
+# Azure CLI v2
+# Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
+- task: AzureCLI@2
+  displayName: Initialize & Plan Terraform
   inputs:
-    #notifyUsers: # string. Required. Notify users. 
-    instructions: Check plan and approve if good # string. Instructions. 
-    #onTimeout: 'reject' # 'reject' | 'resume'. On timeout. Default: reject.
+    azureSubscription: AZLabConnection # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
+    scriptType: bash # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
+    scriptLocation: inlineScript # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
+    #scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
+    # string. Required when scriptLocation = inlineScript. Inline Script.
+    inlineScript: |
+      terraform apply -input=false -auto-approve
+    #arguments: # string. Alias: scriptArguments. Script Arguments. 
+    #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
+  # Advanced
+    addSpnToEnvironment: true # boolean. Access service principal details in script. Default: false.
+    #useGlobalConfig: false # boolean. Use global Azure CLI configuration. Default: false.
+    workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
+    #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
+    #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
