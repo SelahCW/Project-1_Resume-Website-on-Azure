@@ -28,3 +28,4 @@ steps:
     terraform init
     terraform plan
   displayName: Terraform Initalize & Plan
+  workingDirectory: ./src/infrastructure/web-app
