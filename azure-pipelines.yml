@@ -4,17 +4,84 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- azure-pipelines
 
-pool:
-  websitevmssagents
+pool: 
+  vmImage: ubuntu-latest
 
+variables: 
+  - group: static-website-variables
+  - name: workingDirectory
+    value: ./src/infrastructure/web-app
+  - name: service_connection
+    value: AZLabConnection
+  
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
+- checkout: self
+# 3 tasks: 1.) download + install terraform, 2.) initialize + plan 3.) run terraform apply
+# Download file from download link: https://releases.hashicorp.com/terraform/1.6.4/terraform_1.6.4_linux_amd64.zip
+# Extract file
+# Move file into /usr/local/bin/terraform
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    wget -nv "https://releases.hashicorp.com/terraform/1.6.4/terraform_1.6.4_linux_amd64.zip"
+    unzip terraform_1.6.4_linux_amd64.zip
+    mv -v terraform /usr/local/bin
+    terraform -v
+  displayName: Install Terraform
+# Get subscription info that Terraform needs and store it in environmental variables.
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#configuring-the-service-principal-in-terraform
+- task: AzureCLI@2
+  displayName: 'Set Authentication Variables'
+  inputs:
+    azureSubscription: ${{ variables.service_connection }}
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      $subscriptionId = (az account list | ConvertFrom-Json | Where-Object -Property isDefault -Value true -EQ).id
+      Write-Output "##vso[task.setvariable variable=CLIENT_ID;isSecret=true;isOutput=false]$Env:servicePrincipalId"
+      Write-Output "##vso[task.setvariable variable=CLIENT_SECRET;isSecret=true;isOutput=false]$Env:servicePrincipalKey"
+      Write-Output "##vso[task.setvariable variable=TENANT_ID;isSecret=false;isOutput=false]$Env:tenantId"
+      Write-Output "##vso[task.setvariable variable=SUBSCRIPTION_ID;isSecret=false;isOutput=false]$subscriptionId"
+    addSpnToEnvironment: true
+    useGlobalConfig: true
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Init'
+  inputs:
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
+      terraform init -backend-config="prod.website.tfbackend"
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
+  
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Plan'
+  inputs:
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
+      terraform plan
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
 
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Apply'
+  inputs:
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
+      terraform apply -input=false -auto-approve
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
