@@ -14,12 +14,11 @@ variables:
   
 steps:
 - checkout: self
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: 'src/website'
-    #api_location: ''
-    #skip_app_build: true
-    skip_api_build: true
-    output_location: 'src/infrastructure'
-    azure_static_web_apps_api_token: $(deployment_token)
-
+# 3 tasks: 1.) download + install terraform, 2.) initialize + plan 3.) run terraform apply
+# Download file from download link: https://releases.hashicorp.com/terraform/1.6.4/terraform_1.6.4_linux_amd64.zip
+# Extract file
+# Move file into /usr/local/bin/terraform
+- script: |
+    wget "https://releases.hashicorp.com/terraform/1.6.4/terraform_1.6.4_linux_amd64.zip"
+    unzip terraform_1.6.4_linux_amd64.zip
+    mv terraform /usr/local/bin
