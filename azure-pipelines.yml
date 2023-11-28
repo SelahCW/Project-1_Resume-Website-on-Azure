@@ -48,7 +48,7 @@ steps:
 # Azure CLI v2
 # Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
 - task: AzureCLI@2
-  displayName: Initialize & Plan Terraform
+  displayName: Deploy Terraform
   inputs:
     azureSubscription: AZLabConnection # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
     scriptType: bash # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
