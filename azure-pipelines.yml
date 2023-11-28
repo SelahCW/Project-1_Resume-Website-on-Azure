@@ -11,6 +11,10 @@ pool:
 
 variables: 
   - group: static-website-variables
+  - name: workingDirectory
+    value: ./src/infrastructure/web-app
+  - name: service_connection
+    value: AZLabConnection
   
 steps:
 - checkout: self
@@ -24,44 +28,60 @@ steps:
     mv -v terraform /usr/local/bin
     terraform -v
   displayName: Install Terraform
-# Azure CLI v2
-# Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
+# Get subscription info that Terraform needs and store it in environmental variables.
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#configuring-the-service-principal-in-terraform
 - task: AzureCLI@2
-  displayName: Initialize & Plan Terraform
+  displayName: 'Set Authentication Variables'
   inputs:
-    azureSubscription: AZLabConnection # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
-    scriptType: bash # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
-    scriptLocation: inlineScript # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
-    #scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
-    # string. Required when scriptLocation = inlineScript. Inline Script.
+    azureSubscription: ${{ variables.service_connection }}
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
     inlineScript: |
+      $subscriptionId = (az account list | ConvertFrom-Json | Where-Object -Property isDefault -Value true -EQ).id
+      Write-Output "##vso[task.setvariable variable=CLIENT_ID;isSecret=true;isOutput=false]$Env:servicePrincipalId"
+      Write-Output "##vso[task.setvariable variable=CLIENT_SECRET;isSecret=true;isOutput=false]$Env:servicePrincipalKey"
+      Write-Output "##vso[task.setvariable variable=TENANT_ID;isSecret=false;isOutput=false]$Env:tenantId"
+      Write-Output "##vso[task.setvariable variable=SUBSCRIPTION_ID;isSecret=false;isOutput=false]$subscriptionId"
+    addSpnToEnvironment: true
+    useGlobalConfig: true
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Init'
+  inputs:
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
       terraform init -backend-config="prod.website.tfbackend"
-      terraform plan
-    #arguments: # string. Alias: scriptArguments. Script Arguments. 
-    #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
-  # Advanced
-    addSpnToEnvironment: true # boolean. Access service principal details in script. Default: false.
-    #useGlobalConfig: false # boolean. Use global Azure CLI configuration. Default: false.
-    workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
-    #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
-    #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
-# Azure CLI v2
-# Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
-- task: AzureCLI@2
-  displayName: Deploy Terraform
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
+  
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Plan'
   inputs:
-    azureSubscription: AZLabConnection # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
-    scriptType: bash # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
-    scriptLocation: inlineScript # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
-    #scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
-    # string. Required when scriptLocation = inlineScript. Inline Script.
-    inlineScript: |
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
+      terraform plan
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
+
+# Run Terraform Init.
+- task: Bash@3
+  displayName: 'Terraform Apply'
+  inputs:
+    workingDirectory: ${{ variables.workingDirectory }}
+    targetType: 'inline'
+    script: |
       terraform apply -input=false -auto-approve
-    #arguments: # string. Alias: scriptArguments. Script Arguments. 
-    #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
-  # Advanced
-    addSpnToEnvironment: true # boolean. Access service principal details in script. Default: false.
-    #useGlobalConfig: false # boolean. Use global Azure CLI configuration. Default: false.
-    workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
-    #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
-    #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
+  env:
+    ARM_CLIENT_ID: $(CLIENT_ID)
+    ARM_CLIENT_SECRET: $(CLIENT_SECRET)
+    ARM_TENANT_ID: $(TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
