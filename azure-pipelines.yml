@@ -45,3 +45,11 @@ steps:
     workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
     #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
     #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
+# Manual validation v0
+# [PREVIEW] Pause a pipeline run to wait for manual interaction. Works only with YAML pipelines.
+- task: ManualValidation@0
+  displayName: Approve Terraform Apply
+  inputs:
+    #notifyUsers: # string. Required. Notify users. 
+    #instructions: # string. Instructions. 
+    #onTimeout: 'reject' # 'reject' | 'resume'. On timeout. Default: reject.
