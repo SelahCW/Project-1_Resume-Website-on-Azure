@@ -24,3 +24,7 @@ steps:
     mv -v terraform /usr/local/bin
     terraform -v
   displayName: Install Terraform
+- script: |
+    terraform init
+    terraform plan
+  displayName: Terraform Initalize & Plan
