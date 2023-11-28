@@ -27,29 +27,21 @@ steps:
 # Azure CLI v2
 # Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
 - task: AzureCLI@2
-  displayName: Authenticate Terraform
+  displayName: Initialize & Plan Terraform
   inputs:
     azureSubscription: AZLabConnection # string. Alias: connectedServiceNameARM. Required. Azure Resource Manager connection. 
-    scriptType: pscore # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
+    scriptType: bash # 'ps' | 'pscore' | 'batch' | 'bash'. Required. Script Type. 
     scriptLocation: inlineScript # 'inlineScript' | 'scriptPath'. Required. Script Location. Default: scriptPath.
     #scriptPath: # string. Required when scriptLocation = scriptPath. Script Path. 
     # string. Required when scriptLocation = inlineScript. Inline Script.
     inlineScript: |
-      $subscriptionId = (az account list | ConvertFrom-Json | Where-Object -Property isDefault -Value true -EQ).id
-      Write-Output "##vso[task.setvariable variable=ARM_CLIENT_ID;isSecret=true;isOutput=false]$Env:servicePrincipalId"
-      Write-Output "##vso[task.setvariable variable=ARM_CLIENT_SECRET;isSecret=true;isOutput=false]$Env:servicePrincipalKey"
-      Write-Output "##vso[task.setvariable variable=ARM_TENANT_ID;isSecret=false;isOutput=false]$Env:tenantId"
-      Write-Output "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID;isSecret=false;isOutput=false]$subscriptionId"
+      terraform init
+      terraform plan
     #arguments: # string. Alias: scriptArguments. Script Arguments. 
     #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
   # Advanced
     addSpnToEnvironment: true # boolean. Access service principal details in script. Default: false.
     #useGlobalConfig: false # boolean. Use global Azure CLI configuration. Default: false.
-    #workingDirectory: # string. Alias: cwd. Working Directory. 
+    workingDirectory: ./src/infrastructure/web-app # string. Alias: cwd. Working Directory. 
     #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
     #powerShellIgnoreLASTEXITCODE: false # boolean. Optional. Use when scriptType = ps || scriptType = pscore. Ignore $LASTEXITCODE. Default: false.
-- script: |
-    terraform init
-    terraform plan
-  displayName: Terraform Initalize & Plan
-  workingDirectory: ./src/infrastructure/web-app
