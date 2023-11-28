@@ -43,7 +43,7 @@ steps:
     #arguments: # string. Alias: scriptArguments. Script Arguments. 
     #powerShellErrorActionPreference: 'stop' # 'stop' | 'continue' | 'silentlyContinue'. Optional. Use when scriptType = ps || scriptType = pscore. ErrorActionPreference. Default: stop.
   # Advanced
-    #addSpnToEnvironment: false # boolean. Access service principal details in script. Default: false.
+    addSpnToEnvironment: true # boolean. Access service principal details in script. Default: false.
     #useGlobalConfig: false # boolean. Use global Azure CLI configuration. Default: false.
     #workingDirectory: # string. Alias: cwd. Working Directory. 
     #failOnStandardError: false # boolean. Fail on Standard Error. Default: false.
