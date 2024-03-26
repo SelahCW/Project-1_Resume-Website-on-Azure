@@ -1,6 +1,7 @@
 
 # Introduction 
 A static website deployed on the cloud using Terraform and a Microsoft Azure storage account that displays my resume.
+(Made during Softchoice DevOps Engineer Co-Op)
 
 # Getting Started
 * Install [Terraform](https://learn.hashicorp.com/terraform/getting-started/install)
